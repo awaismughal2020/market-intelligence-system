@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Intelligence Platform - Demo</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-brain"></i> Marketing Intelligence Platform</h1>
+                <p class="subtitle">AI-Powered Campaign Analysis & Optimization</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Campaign Input Section -->
+            <section class="campaign-input">
+                <h2><i class="fas fa-rocket"></i> Campaign Analysis</h2>
+                <form id="campaignForm" class="campaign-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="campaignName">Campaign Name</label>
+                            <input type="text" id="campaignName" name="campaignName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="platform">Platform</label>
+                            <select id="platform" name="platform" required>
+                                <option value="">Select Platform</option>
+                                <option value="Meta Ads">Meta Ads</option>
+                                <option value="Google Ads">Google Ads</option>
+                                <option value="LinkedIn Ads">LinkedIn Ads</option>
+                                <option value="TikTok Ads">TikTok Ads</option>
+                                <option value="Twitter Ads">Twitter Ads</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="budget">Budget ($)</label>
+                            <input type="number" id="budget" name="budget" min="1000" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="industry">Industry</label>
+                            <select id="industry" name="industry" required>
+                                <option value="">Select Industry</option>
+                                <option value="Technology">Technology</option>
+                                <option value="E-commerce">E-commerce</option>
+                                <option value="Healthcare">Healthcare</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Education">Education</option>
+                                <option value="Automotive">Automotive</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="targetAudience">Target Audience</label>
+                            <input type="text" id="targetAudience" name="targetAudience"
+                                   placeholder="e.g., Millennials and Gen Z professionals" required>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label for="objectives">Campaign Objectives</label>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="objectives" value="Brand Awareness"> Brand Awareness</label>
+                                <label><input type="checkbox" name="objectives" value="Lead Generation"> Lead Generation</label>
+                                <label><input type="checkbox" name="objectives" value="Sales"> Sales</label>
+                                <label><input type="checkbox" name="objectives" value="Customer Acquisition"> Customer Acquisition</label>
+                                <label><input type="checkbox" name="objectives" value="Engagement"> Engagement</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="loadDemo" class="btn btn-secondary">
+                            <i class="fas fa-magic"></i> Load Demo Data
+                        </button>
+                        <button type="submit" id="analyzeBtn" class="btn btn-primary">
+                            <i class="fas fa-chart-line"></i> Analyze Campaign
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Analysis Status -->
+            <section id="analysisStatus" class="analysis-status" style="display: none;">
+                <div class="status-content">
+                    <div class="spinner"></div>
+                    <h3>Analyzing Campaign...</h3>
+                    <p>Running 4 AI chains in parallel:</p>
+                    <div class="chain-status">
+                        <div class="chain-item" id="chain1">
+                            <i class="fas fa-users"></i> Audience Intelligence
+                            <span class="status">Processing...</span>
+                        </div>
+                        <div class="chain-item" id="chain2">
+                            <i class="fas fa-paint-brush"></i> Creative Performance
+                            <span class="status">Processing...</span>
+                        </div>
+                        <div class="chain-item" id="chain3">
+                            <i class="fas fa-chess"></i> Competitive Intelligence
+                            <span class="status">Processing...</span>
+                        </div>
+                        <div class="chain-item" id="chain4">
+                            <i class="fas fa-trending-up"></i> Trend Analysis
+                            <span class="status">Processing...</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="resultsSection" class="results-section" style="display: none;">
+                <h2><i class="fas fa-chart-bar"></i> Analysis Results</h2>
+
+                <!-- Overall Score -->
+                <div class="overall-score">
+                    <div class="score-circle">
+                        <span id="overallScore">0</span>
+                        <small>Overall Score</small>
+                    </div>
+                    <div class="processing-time">
+                        <i class="fas fa-stopwatch"></i>
+                        <span id="processingTime">0s</span>
+                    </div>
+                </div>
+
+                <!-- Key Recommendations -->
+                <div class="recommendations">
+                    <h3><i class="fas fa-lightbulb"></i> Key Recommendations</h3>
+                    <ul id="keyRecommendations"></ul>
+                </div>
+
+                <!-- Analysis Tabs -->
+                <div class="analysis-tabs">
+                    <div class="tab-buttons">
+                        <button class="tab-btn active" data-tab="audience">
+                            <i class="fas fa-users"></i> Audience Insights
+                        </button>
+                        <button class="tab-btn" data-tab="creative">
+                            <i class="fas fa-paint-brush"></i> Creative Performance
+                        </button>
+                        <button class="tab-btn" data-tab="competitive">
+                            <i class="fas fa-chess"></i> Competitive Intelligence
+                        </button>
+                        <button class="tab-btn" data-tab="trend">
+                            <i class="fas fa-trending-up"></i> Trend Analysis
+                        </button>
+                    </div>
+
+                    <div class="tab-content">
+                        <!-- Audience Tab -->
+                        <div id="audience-tab" class="tab-pane active">
+                            <div class="insights-grid">
+                                <div class="insight-card">
+                                    <h4>Demographics</h4>
+                                    <div id="demographicsContent"></div>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>Behavioral Patterns</h4>
+                                    <ul id="behavioralPatterns"></ul>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>Engagement Trends</h4>
+                                    <ul id="engagementTrends"></ul>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>Expansion Opportunities</h4>
+                                    <ul id="expansionOpportunities"></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Creative Tab -->
+                        <div id="creative-tab" class="tab-pane">
+                            <div class="insights-grid">
+                                <div class="insight-card">
+                                    <h4>Performance Predictions</h4>
+                                    <ul id="performancePredictions"></ul>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>Optimization Recommendations</h4>
+                                    <ul id="optimizationRecommendations"></ul>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>Emotional Resonance</h4>
+                                    <div id="emotionalResonance"></div>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>Brand Consistency</h4>
+                                    <div class="score-display">
+                                        <span id="brandScore">0</span>%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Competitive Tab -->
+                        <div id="competitive-tab" class="tab-pane">
+                            <div class="insights-grid">
+                                <div class="insight-card">
+                                    <h4>Competitor Activities</h4>
+                                    <ul id="competitorActivities"></ul>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>Market Threats</h4>
+                                    <ul id="marketThreats"></ul>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>Response Strategies</h4>
+                                    <ul id="responseStrategies"></ul>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>Market Opportunities</h4>
+                                    <ul id="marketOpportunities"></ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Trend Tab -->
+                        <div id="trend-tab" class="tab-pane">
+                            <div class="insights-grid">
+                                <div class="insight-card">
+                                    <h4>Emerging Trends</h4>
+                                    <ul id="emergingTrends"></ul>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>Seasonal Patterns</h4>
+                                    <ul id="seasonalPatterns"></ul>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>Viral Potential</h4>
+                                    <div id="viralPotential"></div>
+                                </div>
+                                <div class="insight-card">
+                                    <h4>Timing Recommendations</h4>
+                                    <ul id="timingRecommendations"></ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 Marketing Intelligence Platform - Enterprise Demo Version</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

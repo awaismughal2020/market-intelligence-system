@@ -1,0 +1,12 @@
+services:
+  marketing-ai:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+    volumes:
+      - ./app:/app/app
+      - ./static:/app/static
